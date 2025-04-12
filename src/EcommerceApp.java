@@ -1,21 +1,15 @@
-import clases.entidades.users.Admin;
-import clases.entidades.users.Customer;
 import clases.entidades.users.User;
-import clases.gestoras.AuthManager;
-import clases.gestoras.MenuManager;
-import enums.Rol;
+import service.AuthService;
+import service.MenuService;
 import repository.UserRepository;
 
-import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class EcommerceApp {
 
     private UserRepository userRepository = new UserRepository();
-    private AuthManager authManager = new AuthManager(userRepository);
-    private MenuManager menuManager = new MenuManager();
+    private AuthService authManager = new AuthService(userRepository);
+    private MenuService menuManager = new MenuService();
     private Scanner scanner = new Scanner(System.in);
 
     public EcommerceApp() {

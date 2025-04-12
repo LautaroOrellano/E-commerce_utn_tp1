@@ -1,18 +1,17 @@
-package clases.gestoras;
+package service;
 
 import clases.entidades.Product;
 import clases.entidades.users.Admin;
 import clases.entidades.users.Customer;
 import clases.entidades.users.User;
 import enums.Rol;
-import exceptions.ProductNotFoundException;
 import repository.OrderRepository;
 import repository.ProductRepository;
 import repository.UserRepository;
 
 import java.util.Scanner;
 
-public class MenuManager {
+public class MenuService {
 
     // Repositorios compartidos
     private final ProductRepository productRepository = new ProductRepository();
@@ -20,20 +19,20 @@ public class MenuManager {
     private final OrderRepository orderRepository = new OrderRepository();
 
     // Managers que usan los repositorios compartidos
-    private final ProductManager productManager;
-    private final UserManager userManager;
-    private final OrderManager orderManager;
+    private final ProductService productManager;
+    private final UserService userManager;
+    private final OrderService orderManager;
 
-    public MenuManager() {
-        this.productManager = new ProductManager(productRepository);
-        this.userManager = new UserManager(userRepository, productRepository);
-        this.orderManager = new OrderManager(orderRepository, userRepository, productRepository);
+    public MenuService() {
+        this.productManager = new ProductService(productRepository);
+        this.userManager = new UserService(userRepository, productRepository);
+        this.orderManager = new OrderService(orderRepository, userRepository, productRepository);
     }
 
     //Getters
-    public ProductManager getProductManager() { return productManager; }
-    public UserManager getUserManager() { return userManager; }
-    public OrderManager getOrderManager() { return orderManager; }
+    public ProductService getProductManager() { return productManager; }
+    public UserService getUserManager() { return userManager; }
+    public OrderService getOrderManager() { return orderManager; }
 
 
     public void showWelcomeMenu() {
@@ -81,7 +80,7 @@ public class MenuManager {
         return new Customer(name, lastName, email, password);
     }
 
-    public User showMenuLogin(Scanner scanner, AuthManager authManager) {
+    public User showMenuLogin(Scanner scanner, AuthService authManager) {
         System.out.println("-----------------------");
         System.out.println("| == Sección Login == |");
         System.out.println("-----------------------");

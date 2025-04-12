@@ -1,4 +1,4 @@
-package clases.gestoras;
+package service;
 
 import clases.entidades.Cart;
 import clases.entidades.Order;
@@ -11,16 +11,15 @@ import repository.ProductRepository;
 import repository.UserRepository;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
-public class OrderManager implements IOrderManager {
+public class OrderService implements IOrderManager {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
 
-    public OrderManager (OrderRepository orderRepository, UserRepository userRepository,
-                         ProductRepository productRepository) {
+    public OrderService(OrderRepository orderRepository, UserRepository userRepository,
+                        ProductRepository productRepository) {
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
         this.userRepository = userRepository;
