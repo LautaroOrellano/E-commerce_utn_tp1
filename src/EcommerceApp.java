@@ -1,5 +1,3 @@
-package clases.entidades;
-
 import clases.entidades.users.Admin;
 import clases.entidades.users.Customer;
 import clases.entidades.users.User;
@@ -7,6 +5,7 @@ import clases.gestoras.AuthManager;
 import clases.gestoras.MenuManager;
 import enums.Rol;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -25,26 +24,29 @@ public class EcommerceApp {
     }
 
     public void run() {
-        System.out.println("=== Bienvenido a ?? Ecommerce ===");
+        int opcion = 0;
 
-        System.out.println("Email: ");
-        String email = scanner.nextLine();
+        do {
+            System.out.println("=== Bienvenido a ?? Ecommerce ===");
 
-        System.out.println("Password");
-        String password = scanner.nextLine();
+            System.out.println("Email: ");
+            String email = scanner.nextLine();
 
-        User user = authManager.login(email, password);
+            System.out.println("Password");
+            String password = scanner.nextLine();
 
-        if (user != null) {
-            System.out.println("Login exitoso. Bienvenido " + user.getName());
-            if (user.getRol() == Rol.CUSTOMER) {
+            User user = authManager.login(email, password);
+
+            if (user != null) {
+                System.out.println("Login exitoso. Bienvenido " + user.getName());
                 user.getMenu();
-            } else if (user.getRol() == Rol.ADMIN) {
-                user.getMenu();
+                System.out.println("Elige una opcion correcta.");
+                opcion = scanner.nextInt();
+                menuManager.processOption(user, opcion);
+            } else {
+                System.out.println("Credenciales incorrectas.");
             }
+        } while (opcion != 0);
 
-        } else {
-            System.out.println("Credenciales incorrectas.");
-        }
     }
 }
