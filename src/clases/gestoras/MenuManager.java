@@ -30,7 +30,19 @@ public class MenuManager {
                 case 2 -> {
                     productManager.getAllProducts();
                 }
-                case 3 -> productManager.updateProduct();
+                case 3 -> {
+                    System.out.println("Ingrese el id del producto a actualizar");
+                    int id = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.println("Nuevo nombre");
+                    String name = scanner.nextLine();
+                    System.out.println("Nueva descripcion");
+                    String description = scanner.nextLine();
+                    System.out.println("Nuevo stock");
+                    int stock = scanner.nextInt();
+                    scanner.nextLine();
+                    productManager.updateProduct(id, name, description, stock);
+                }
                 case 4 -> orderManager.getOrder();
                 case 5 -> orderManager.searchOrder();
                 case 6 -> userManager.getAllUsers();

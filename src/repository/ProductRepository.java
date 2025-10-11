@@ -5,9 +5,10 @@ import interfaces.IRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ProductRepository implements IRepository<Product> {
-    private List<Product> products = new ArrayList<>();
+    private final List<Product> products = new ArrayList<>();
 
     @Override
     public void add(Product item) {
@@ -15,17 +16,19 @@ public class ProductRepository implements IRepository<Product> {
     }
 
     @Override
-    public Product findById(int id) {
-        return null;
+    public Optional<Product> findById(int id) {
+        return products.stream()
+                       .filter(p -> p.getId() == id)
+                       .findFirst();
     }
 
     @Override
     public List<Product> getAll() {
-        return List.of();
+        return products;
     }
 
     @Override
     public void remove(Product item) {
-
+        products.remove(item);
     }
 }
