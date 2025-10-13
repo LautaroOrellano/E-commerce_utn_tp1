@@ -5,6 +5,8 @@ import interfaces.IProducManager;
 import interfaces.IRepository;
 import repository.ProductRepository;
 
+import java.util.List;
+
 public class ProductManager implements IProducManager {
     private IRepository<Product> repository;
 
@@ -37,12 +39,22 @@ public class ProductManager implements IProducManager {
     }
 
     @Override
+    public Product searchProductFX(int id) {
+        return repository.findById(id)
+                .orElse(null);
+    }
+
+    @Override
     public void getAllProducts() {
         if(repository.getAll().isEmpty()) {
             System.out.println("No hay productos cargados actualmente.");
         }
 
         repository.getAll().forEach(System.out::println);
+    }
+
+    public List<Product> getProducts() {
+        return repository.getAll();
     }
 
     @Override
