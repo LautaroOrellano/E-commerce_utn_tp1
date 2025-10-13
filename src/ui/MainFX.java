@@ -1,30 +1,39 @@
+package ui;
+
+import clases.gestoras.ProductManager;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import ui.controllers.LoginController;
 
-public class Main extends Application {
+public class MainFX extends Application {
 
-        private Stage primaryStage;
-        private StackPane root = new StackPane();
+    private Stage primaryStage;
+    private StackPane root = new StackPane();
+    private LoginController loginController;
 
-        @Override
-        public void start(Stage stage) {
-            this.primaryStage = stage;
+    @Override
+    public void start(Stage stage) {
+        this.primaryStage = stage;
 
-            LoginController loginController = new LoginController(this);
-            root.getChildren().setAll(loginController.getView());
+        // Creamos el login
+        loginController = new LoginController(this);
+        root.getChildren().setAll(loginController.getView());
 
-            Scene scene = new Scene(root, 600, 400);
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("E-commerce KeyLab");
-            primaryStage.show();
-        }
+        Scene scene = new Scene(root, 600, 400);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("E-commerce KeyLab");
+        primaryStage.show();
+    }
 
-        public void setScreen(StackPane pane) {
-            root.getChildren().setAll(pane);
-        }
+    public void setScreen(StackPane pane) {
+        root.getChildren().setAll(pane);
+    }
+
+    public LoginController getLoginController() {
+        return loginController;
+    }
 
     public static void main(String[] args) {
         launch();
