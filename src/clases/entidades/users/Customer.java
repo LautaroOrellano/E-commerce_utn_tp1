@@ -9,6 +9,10 @@ public class Customer extends User {
     private String address;
     private int age;
 
+    public Customer(String name, String lastName, String email, String password) {
+        super(name, lastName, email, password, Rol.CUSTOMER);
+    }
+
     public Customer(String name, String lastName, String email, String password,
                     long dni, long number, String address, int age) {
         super(name, lastName, email, password, Rol.CUSTOMER);
