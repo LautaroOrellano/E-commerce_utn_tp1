@@ -7,13 +7,12 @@ import java.util.Scanner;
 
 public class MenuManager {
 
-    private Scanner scanner = new Scanner(System.in);
     private ProductManager productManager = new ProductManager();
     private UserManager userManager = new UserManager();
     private OrderManager orderManager = new OrderManager();
     private ShopManager shopManager = new ShopManager();
 
-    public void processOption(User user, int option) {
+    public void processOption(User user, int option, Scanner scanner) {
         if (user.getRol() == Rol.ADMIN) {
             switch (option) {
                 case 1 -> {
