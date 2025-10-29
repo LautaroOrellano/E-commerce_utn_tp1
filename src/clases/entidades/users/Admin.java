@@ -8,6 +8,11 @@ public class Admin extends User {
         super(name, lastName, email, password, Rol.ADMIN);
     }
 
+    @Override
+    public void darseDeBaja() {
+
+    }
+
     // baja o actualizacion como polimorfismo
     @Override
     public String toString() {
