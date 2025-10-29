@@ -3,6 +3,7 @@ package repository;
 import clases.entidades.Product;
 import interfaces.IRepository;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import utils.JsonUtiles;
 
@@ -12,24 +13,38 @@ import java.util.Optional;
 
 public class ProductRepository implements IRepository<Product> {
     private final List<Product> products = new ArrayList<>();
-    private final String archivo = "produc.json";
+    private final String archivo = "product.json";
 
-    /*public ProductRepository() {
-        JSONArray array = JsonUtiles.leer(archivo);
-        for (int i = 0; i < array.length(); i++) {
-            JSONObject obj = array.getJSONObject(i);
-            Product p = new Product(
-                    obj.getString("name"),
-                    obj.getString("description"),
-                    obj.getInt("stock"),
-                    obj.getPrice("price")
-            );
 
-    }*/
+    public ProductRepository() {
+        try {
+            String jsonData = JsonUtiles.leer(archivo);
+
+            if (jsonData.isEmpty() || jsonData.equals("[]")) {
+                System.out.println("No hay productos guardados, creando archivo vacío...");
+                JsonUtiles.grabar(new JSONArray(), archivo);
+            } else {
+                JSONArray array = new JSONArray(jsonData);
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject obj = array.getJSONObject(i);
+                    Product p = new Product(
+                            obj.getString("name"),
+                            obj.getString("description"),
+                            obj.getDouble("price"),
+                            obj.getInt("stock")
+                    );
+                    products.add(p);
+                }
+            }
+        } catch (JSONException e) {
+            System.out.println("Error al leer productos desde json");
+        }
+    }
     
     @Override
     public void add(Product item) {
         products.add(item);
+        saveToJson();
     }
 
     @Override
@@ -53,6 +68,29 @@ public class ProductRepository implements IRepository<Product> {
 
     @Override
     public boolean removeById(int id) {
-        return products.removeIf(p -> p.getId() == id);
+        boolean removed = products.removeIf(p -> p.getId() == id);
+        if (removed) {
+            saveToJson();
+        }
+        return removed;
     }
+
+    private void saveToJson()  {
+        try {
+            JSONArray array = new JSONArray();
+            for (Product p : products) {
+                JSONObject obj = new JSONObject();
+                obj.put("name", p.getName());
+                obj.put("description", p.getDescription());
+                obj.put("price", p.getPrice());
+                obj.put("stock", p.getStock());
+                array.put(obj);
+            }
+            JsonUtiles.grabar(array, archivo);
+        } catch (JSONException e) {
+            System.out.println("No se pudo guardar el archivo en el json");
+        }
+
+    }
+
 }
