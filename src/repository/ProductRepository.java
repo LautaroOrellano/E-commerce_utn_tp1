@@ -27,12 +27,7 @@ public class ProductRepository implements IRepository<Product> {
                 JSONArray array = new JSONArray(jsonData);
                 for (int i = 0; i < array.length(); i++) {
                     JSONObject obj = array.getJSONObject(i);
-                    Product p = new Product(
-                            obj.getString("name"),
-                            obj.getString("description"),
-                            obj.getDouble("price"),
-                            obj.getInt("stock")
-                    );
+                    Product p = Product.fromJson(obj);
                     products.add(p);
                 }
             }
@@ -76,21 +71,11 @@ public class ProductRepository implements IRepository<Product> {
     }
 
     private void saveToJson()  {
-        try {
-            JSONArray array = new JSONArray();
-            for (Product p : products) {
-                JSONObject obj = new JSONObject();
-                obj.put("name", p.getName());
-                obj.put("description", p.getDescription());
-                obj.put("price", p.getPrice());
-                obj.put("stock", p.getStock());
-                array.put(obj);
-            }
-            JsonUtiles.grabar(array, archivo);
-        } catch (JSONException e) {
-            System.out.println("No se pudo guardar el archivo en el json");
+        JSONArray array = new JSONArray();
+        for (Product p : products) {
+            array.put(p.toJson());
         }
-
+        JsonUtiles.grabar(array, archivo);
     }
 
 }
