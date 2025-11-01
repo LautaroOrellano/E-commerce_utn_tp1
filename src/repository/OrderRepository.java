@@ -10,6 +10,8 @@ import java.util.Optional;
 public class OrderRepository implements IRepository<Order> {
     private final List<Order> orders = new ArrayList<>();
 
+
+    // CRUD GENERICO
     @Override
     public void add(Order item) {
         orders.add(item);
@@ -30,6 +32,11 @@ public class OrderRepository implements IRepository<Order> {
     @Override
     public List<Order> getAll() {
         return orders;
+    }
+
+    @Override
+    public void update(Order entity) {
+
     }
 
     @Override

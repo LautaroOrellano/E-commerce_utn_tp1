@@ -43,7 +43,8 @@ public class ProductRepository implements IRepository<Product> {
         }
         JsonUtiles.grabar(array, archivo);
     }
-    
+
+    // CRUD GENERICO
     @Override
     public void add(Product item) {
         products.add(item);
@@ -67,6 +68,19 @@ public class ProductRepository implements IRepository<Product> {
     @Override
     public List<Product> getAll() {
         return products;
+    }
+
+    @Override
+    public void update(Product updateProduct) {
+        for (int i = 0; i < products.size(); i++) {
+            if (products.get(i).getId() == updateProduct.getId()) {
+                products.set(i, updateProduct);
+                saveToJson();
+                System.out.println("Producto actualizado.");
+                return;
+            }
+        }
+        System.out.println("No se encontró el producto con ID " + updateProduct.getId());
     }
 
     @Override
