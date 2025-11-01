@@ -65,9 +65,9 @@ public class UserRepository implements IRepository<User> {
         } finally {
             System.out.println("Operación de guardado finalizada.");
         }
-
     }
 
+    // CRUD GENERICO
     @Override
     public void add(User user) {
         users.add(user);
@@ -91,6 +91,18 @@ public class UserRepository implements IRepository<User> {
     @Override
     public List<User> getAll() {
         return users;
+    }
+
+    public void update(User updatedUser) {
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getId() == updatedUser.getId()) {
+                users.set(i, updatedUser);
+                saveToJson();
+                System.out.println("Usuario actualizado.");
+                return;
+            }
+        }
+        System.out.println("No se encontró el usuario con ID " + updatedUser.getId());
     }
 
     @Override
