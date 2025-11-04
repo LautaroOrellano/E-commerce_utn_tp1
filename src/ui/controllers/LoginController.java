@@ -3,7 +3,7 @@ package ui.controllers;
 import clases.entidades.users.Admin;
 import clases.entidades.users.Customer;
 import clases.entidades.users.User;
-import clases.gestoras.AuthManager;
+import service.AuthService;
 import enums.Rol;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -15,13 +15,11 @@ import javafx.scene.layout.VBox;
 import repository.UserRepository;
 import ui.MainFX;
 
-import java.util.ArrayList;
-
 public class LoginController {
 
     private StackPane view = new StackPane();
     private UserRepository userRepository = new UserRepository();
-    private AuthManager authManager = new AuthManager(userRepository);
+    private AuthService authManager = new AuthService(userRepository);
     private MainFX mainApp;
 
     public LoginController(MainFX mainApp) {

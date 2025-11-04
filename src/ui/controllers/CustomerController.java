@@ -1,7 +1,7 @@
 package ui.controllers;
 
 import clases.entidades.users.User;
-import clases.gestoras.MenuManager;
+import service.MenuService;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -11,7 +11,7 @@ import ui.MainFX;
 public class CustomerController {
 
     private StackPane view = new StackPane();
-    private MenuManager menuManager = new MenuManager();
+    private MenuService menuManager = new MenuService();
     private User currentUser;
 
     public CustomerController(MainFX mainApp, User user) {

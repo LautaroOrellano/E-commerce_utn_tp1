@@ -1,15 +1,12 @@
-package clases.gestoras;
+package service;
 
 import clases.entidades.users.User;
 import repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class AuthManager {
+public class AuthService {
     private final UserRepository userRepository;
 
-    public AuthManager(UserRepository userRepository) {
+    public AuthService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

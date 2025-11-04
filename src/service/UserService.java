@@ -1,22 +1,18 @@
-package clases.gestoras;
+package service;
 
 import clases.entidades.Product;
-import clases.entidades.users.User;
-import com.sun.scenario.effect.impl.prism.PrDrawable;
 import exceptions.ItemOutOfStockException;
 import interfaces.IUserManager;
 import repository.ProductRepository;
 import repository.UserRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-public class UserManager implements IUserManager {
+public class UserService implements IUserManager {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
 
-    public UserManager(UserRepository userRepository, ProductRepository productRepository) {
+    public UserService(UserRepository userRepository, ProductRepository productRepository) {
         this.userRepository = userRepository;
         this.productRepository = productRepository;
     }

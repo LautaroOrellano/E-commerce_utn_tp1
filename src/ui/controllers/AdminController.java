@@ -2,20 +2,19 @@ package ui.controllers;
 
 import clases.entidades.Product;
 import clases.entidades.users.User;
-import clases.gestoras.MenuManager;
+import service.MenuService;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import org.w3c.dom.Text;
 import ui.MainFX;
 
 public class AdminController {
 
     private StackPane view = new StackPane();
-    private MenuManager menuManager = new MenuManager();
+    private MenuService menuManager = new MenuService();
     private User currentUser;
 
     public AdminController(MainFX mainApp, User user) {

@@ -1,4 +1,4 @@
-package clases.gestoras;
+package service;
 
 import clases.entidades.Product;
 import exceptions.ProductNotFoundException;
@@ -8,10 +8,10 @@ import repository.ProductRepository;
 
 import java.util.List;
 
-public class ProductManager implements IProducManager {
+public class ProductService implements IProducManager {
     private IRepository<Product> productRepository;
 
-    public ProductManager(ProductRepository repository) {
+    public ProductService(ProductRepository repository) {
         this.productRepository = repository;
     }
 
