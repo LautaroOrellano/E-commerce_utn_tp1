@@ -1,4 +1,5 @@
 import models.users.User;
+import repository.ProductRepository;
 import service.AuthService;
 import service.MenuService;
 import repository.UserRepository;
@@ -6,8 +7,8 @@ import repository.UserRepository;
 import java.util.Scanner;
 
 public class EcommerceApp {
-
-    private UserRepository userRepository = new UserRepository();
+    ProductRepository productRepository = new ProductRepository();
+    private UserRepository userRepository = new UserRepository(productRepository);
     private AuthService authManager = new AuthService(userRepository);
     private MenuService menuManager = new MenuService();
     private Scanner scanner = new Scanner(System.in);
