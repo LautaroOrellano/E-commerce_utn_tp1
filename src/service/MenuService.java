@@ -15,7 +15,7 @@ public class MenuService {
 
     // Repositorios compartidos
     private final ProductRepository productRepository = new ProductRepository();
-    private final UserRepository userRepository = new UserRepository();
+    private final UserRepository userRepository = new UserRepository(productRepository);
     private final OrderRepository orderRepository = new OrderRepository();
 
     // Managers que usan los repositorios compartidos
@@ -228,19 +228,24 @@ public class MenuService {
                 int quantity = 0;
 
                 while(true) {
-                    System.out.println("Elija el número del producto (0 para cancelar): ");
-                    if (!scanner.hasNextInt()) {
-                        System.out.println("Ingrese un número válido");
-                        scanner.nextLine();
+                    System.out.println("Elija el número del producto (o escribra 'exit' para cancelar): ");
+                    String input = scanner.nextLine().trim();
+
+                    if (input.equalsIgnoreCase("exit")) {
+                        System.out.println("Operación cancelada.");
+                        return;
+                    }
+
+                    try {
+                        optionCart = Integer.parseInt(input);
+                    } catch (NumberFormatException e) {
+                        System.out.println("Ingrese un número válido.");
                         continue;
                     }
 
-                    optionCart = scanner.nextInt();
-                    scanner.nextLine();
-
-                    if (optionCart == 0) {
-                        System.out.println("Operacion cancelada.");
-                        break;
+                    if (optionCart <= 0) {
+                        System.out.println("Opción fuera de rango");
+                        continue;
                     }
 
                     Product selected = productManager.getProductByIndex(optionCart - 1);
@@ -250,18 +255,23 @@ public class MenuService {
                     }
 
                     while (true) {
-                        System.out.println("Elija la cantidad a agregar: ");
-                        if (!scanner.hasNextInt()) {
-                            System.out.println("Ingrese un número válido");
-                            scanner.nextLine();
+                        System.out.println("Elija la cantidad a agregar: (o escriba 'exit' para cancelar.)");
+                        String qtyInput = scanner.nextLine().trim();
+
+                        if (qtyInput.equalsIgnoreCase("exit")) {
+                            System.out.println("Operación cancelada.");
+                            return;
+                        }
+
+                        try {
+                            quantity = Integer.parseInt(qtyInput);
+                        } catch (NumberFormatException e) {
+                            System.out.println("Ingrese un número válido.");
                             continue;
                         }
 
-                        quantity = scanner.nextInt();
-                        scanner.nextLine();
-
                         if (quantity <= 0) {
-                            System.out.println("La cantidad debe ser mayor a 0");
+                            System.out.println("La cantidad debe ser mayor a 0.");
                             continue;
                         }
 
@@ -288,14 +298,27 @@ public class MenuService {
 
                 int optionDelete = -1;
                 while (true) {
-                    System.out.print("Ingrese el número del producto que desea eliminar: ");
-                    if (!scanner.hasNextInt()) {
+                    System.out.println("Ingrese el n° del producto que desea eliminar: (o escriba 'exit' para cancelar)");
+                    String input = scanner.nextLine().trim();
+
+                    if (input.equalsIgnoreCase("exit")) {
+                        System.out.println("Operación cancelada.");
+                        return;
+                    }
+
+                    try {
+                        optionDelete = Integer.parseInt(input);
+                    } catch (NumberFormatException e) {
                         System.out.println("Debe ingresar un número válido.");
-                        scanner.nextLine();
                         continue;
                     }
-                    optionDelete = scanner.nextInt();
-                    scanner.nextLine();
+
+                    Product selected = productManager.getProductByIndex(optionDelete - 1);
+                    if (selected == null) {
+                        System.out.println("Opción fuera de rango");
+                        continue;
+                    }
+
                     if (optionDelete <= 0) {
                         System.out.println("El número debe ser mayor a cero.");
                         continue;
@@ -305,23 +328,28 @@ public class MenuService {
 
                 int quantityDelete = -1;
                 while (true) {
-                    System.out.print("Ingrese la cantidad a eliminar: ");
-                    if (!scanner.hasNextInt()) {
+                    System.out.println("Ingrese la cantidad a eliminar (o escriba 'exit' para cancelar): ");
+                    String qtyInput = scanner.nextLine().trim();
+
+                    if (qtyInput.equalsIgnoreCase("exit")) {
+                        System.out.println("Operación cancelada.");
+                        return; // o break si querés seguir dentro del menú
+                    }
+
+                    try {
+                        quantityDelete = Integer.parseInt(qtyInput);
+                    } catch (NumberFormatException e) {
                         System.out.println("Debe ingresar un número válido.");
-                        scanner.nextLine();
                         continue;
                     }
-                    quantityDelete = scanner.nextInt();
-                    scanner.nextLine();
+
                     if (quantityDelete <= 0) {
                         System.out.println("La cantidad debe ser mayor a cero.");
                         continue;
                     }
                     break;
                 }
-
                 userManager.deleteProductToCart(user.getId(), optionDelete - 1, quantityDelete);
-
             }
             case 6 -> {
                 // Vaciar carrito completo
@@ -343,4 +371,5 @@ public class MenuService {
             default -> System.out.println("Opcion incorrecta.");
         }
     }
+
 }
