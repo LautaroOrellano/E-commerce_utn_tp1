@@ -51,8 +51,23 @@ public class OrderService implements IOrderManager {
             product.setStock(product.getStock() - quantity);
         }
 
+        List<CartItem> orderItems = new ArrayList<>();
+        for (CartItem item : cart.getItems()) {
+            Product original = item.getProduct();
+
+            Product productCopy = new Product(
+                    original.getName(),
+                    original.getDescription(),
+                    original.getPrice(),
+                    original.getStock()
+            );
+            productCopy.setId(original.getId());
+
+            orderItems.add(new CartItem(productCopy, item.getQuantity()));
+        }
+
         // Creamos la orden con los mismos productos del carrito
-        Order order = new Order(repoUser.getId(), new ArrayList<>(cart.getItems()));
+        Order order = new Order(repoUser.getId(), orderItems);
 
         // Total usando el método del carrito
         double total = cart.getTotalPrice();
