@@ -41,8 +41,6 @@ public class UserService implements IUserManager {
                 .ifPresentOrElse(user -> {
                     if (product.getStock() >= quantity) {
                         user.addProductToCart(product, quantity);
-                         product.setStock(product.getStock() - quantity );
-
                          userRepository.update(user);
                     } else {
                         throw new ItemOutOfStockException("Stock insuficiente");
@@ -112,12 +110,10 @@ public class UserService implements IUserManager {
                     // Si la cantidad a eliminar >= cantidad en el carrito, eliminar todo
                     if (quantity >= item.getQuantity()) {
                         items.remove(i);
-                        product.setStock(product.getStock() + item.getQuantity());
                         System.out.println("Se eliminó todo el producto '" + product.getName() + "' del carrito.");
                     } else {
                         // Si es menor, solo restar la cantidad
                         item.setQuantity(item.getQuantity() - quantity);
-                        product.setStock(product.getStock() + quantity);
                         System.out.println("Se eliminaron " + quantity + " unidades de '" + product.getName() +
                                 "' del carrito correctamente.");
                     }
