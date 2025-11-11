@@ -143,7 +143,8 @@ public class MenuService {
         System.out.println("[11] Ver todo los usuarios   |");
         System.out.println("[12] Modificar un usuario    |");
         System.out.println("[13] Eliminar un usuario     |");
-        System.out.println("[0] Exit                     |");
+        System.out.println("[0] Cerrar sesion           |");
+        System.out.println("[99] Exit                     |");
         System.out.println("------------------------------");
     }
 
@@ -160,7 +161,8 @@ public class MenuService {
         System.out.println("[7] Realizar compra                |");
         System.out.println("[8] Ver ultima compra              |");
         System.out.println("[9] Ver todas mis compras          |");
-        System.out.println("[0] Salir del programa             |");
+        System.out.println("[0] Cerrar sesion                 |");
+        System.out.println("[99] Salir del programa             |");
         System.out.println("------------------------------------");
     }
 
@@ -664,7 +666,12 @@ public class MenuService {
                 }
                 userManager.deleteUserById(id);
             }
-            case 0 -> System.out.printf("Hasta pronto");
+            case 0 -> {
+                // Cerrar sesion
+                System.out.println("Cerrando sesión...");
+                return;
+            }
+            case 99 -> System.out.printf("Hasta pronto");
             default -> System.out.println("Opcion incorrecta.");
         }
     }
@@ -851,12 +858,17 @@ public class MenuService {
                 System.out.println("=== Ver ultima factura ===");
                 orderManager.getMeOrder(user);
             }
-            case 9 ->{
+            case 9 -> {
                 // Ver todas mis ordenes de compras
                 System.out.println("=== Ver todas las facturas ===");
                 orderManager.getAllOrderByUser(user);
             }
-            case 0 ->
+            case 0 -> {
+                // Cerrar sesion
+                System.out.println("Cerrando sesión...");
+                return;
+            }
+            case 99 ->
                     // Salir del programa
                     System.out.printf("Hasta pronto");
             default -> System.out.println("Opcion incorrecta.");
